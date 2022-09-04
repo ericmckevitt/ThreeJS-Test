@@ -67,7 +67,6 @@ const eric = new THREE.Mesh(
 );
 scene.add(eric);
 
-
 /* Moon */
 const moonTexture = new THREE.TextureLoader().load('moon.jpg')
 const normalTexture = new THREE.TextureLoader().load('normal.jpg')
@@ -78,8 +77,27 @@ const moon = new THREE.Mesh(
     normalMap: normalTexture
   })
 );
-moon.position.set(35, 35, 35);
+moon.position.set(-10, 0, 30);
 scene.add(moon);
+
+/* Scroll Behavior */
+
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top;
+  moon.rotation.x += 0.05;
+  moon.rotation.y += 0.075;
+  moon.rotation.z += 0.05;
+
+  eric.rotation.y += 0.01;
+  eric.rotation.z += 0.01;
+
+  // Move the camera
+  camera.position.z = t * -0.01;
+  camera.position.x = t * -0.0002;
+  camera.position.y = t * -0.0002;
+}
+// Tell document to call moveCamera() on scroll
+document.body.onscroll = moveCamera
 
 // Draw loop
 function animate() {
